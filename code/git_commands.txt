@@ -1,0 +1,31 @@
+https://www.slideshare.net/paalringstad/github-88475884
+
+
+# navigating the command line
+
+pwd 	#print working directory
+ls 		#list files in directory
+cd 		#change directory
+cd.. 	#move up one folder
+mkdir 	#make directory
+touch 	#create file in current directory
+
+# git key commands
+git init 					#creates hidden file that enables change tracking, i.e. make it a repository. Cloning a remote repo automatically initiates git
+git add
+git commit -m
+git log						#shows all changes 
+git diff 					#difference between changes
+git push 
+git status OR gst 			#checks delta between local and remote repo
+
+# git branch commands
+git branch branch_name 		#create new branch, branch_name
+git checkout branch_name	#navigate to branch_name
+git diff master branch_name	#differences between branch_name and master
+git merge branch_name		#
+git branch -d branch_name	#delete branch_name
+git branch -a				#name all branches
+
+# git remote commands
+git remote -v				#view remote branch name
