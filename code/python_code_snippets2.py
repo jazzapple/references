@@ -89,3 +89,41 @@ else:
 
 print("Exiting calculator...")
 
+############################
+# Classes
+############################
+
+class Car(object):
+	# member variables can be created within the class (e.g. condition) or when initialising an object/instance of the class (e.g. model)
+	condition = "new"
+
+	def __init__(self, model, color, mpg):
+		self.model = model
+		self.color = color
+		self.mpg   = mpg
+	
+	# class methods are like functions but are defined within the class definition. "self" must be provided as the first argument of any class method
+	def display_car(self):
+		print "This is a %s %s with %s MPG." % (self.color, self.model, str(self.mpg))
+
+	# class methods can be used to change member variable values
+	def drive_car(self):
+		self.condition = "used"
+		return self.condition
+	
+# create object my_car as an instance of the Car class		
+my_car = Car("DeLorean", "silver", 88)
+
+# print member variables
+print my_car.condition
+print my_car.model
+print my_car.color
+print my_car.mpg
+
+# call Car class method, display_car
+my_car.display_car()
+
+# call Car class method, drive_car and see how it changes the value of condition from "new" to "used"
+print(my_car.condition)
+my_car.drive_car()
+print(my_car.condition)
