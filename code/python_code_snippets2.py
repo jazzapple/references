@@ -127,3 +127,44 @@ my_car.display_car()
 print(my_car.condition)
 my_car.drive_car()
 print(my_car.condition)
+
+############################
+# Input / Output
+############################
+
+# Create a list to write to a file
+my_list = [i ** 2 for i in range(1, 11)]
+
+# Write to file
+# Use a file handler to open a file for writing
+my_file = open('output.txt', 'w')  # Declare variable. w: write, r: read-only, r+: read and write, a: append
+
+for line in my_list:
+    my_file.write(str(line)+'\n') # separate by new line
+
+my_file.close()
+ 
+# Read from file
+my_file = open('output.txt', 'r')
+print(my_file.read())
+my_file.close()
+
+# Read line by line
+my_file = open('output.txt', 'r')
+
+print(my_file.readline())
+print(my_file.readline())
+print(my_file.readline())
+
+my_file.close()
+
+# Write with auto closing
+with open('output.txt', 'w') as my_file:
+    my_file.write('ss')
+	
+# Read with auto closing
+with open('output.txt', 'r') as my_file:
+   print(my_file.read())
+	
+# check if file is closed
+my_file.closed # returns True or False
