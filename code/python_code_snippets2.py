@@ -168,3 +168,4 @@ with open('output.txt', 'r') as my_file:
 	
 # check if file is closed
 my_file.closed # returns True or False
+
