@@ -169,3 +169,41 @@ with open('output.txt', 'r') as my_file:
 # check if file is closed
 my_file.closed # returns True or False
 
+############################
+# Data Pre-processing
+############################
+
+# Check for any missing values
+df.isnull().sum()
+
+############################
+# Visualisations
+############################
+
+import matplotlib.pyplot as plt 
+import seaborn as sns 
+%matplotlib inline
+
+# Histogram percentile
+sns.set(rc={'figure.figsize':(11.7,8.27)})
+sns.distplot(df['MEDV'], bins=30)
+plt.show()
+
+# Plot correlations between features
+correlation_matrix = df.corr().round(2)
+sns.heatmap(data=correlation_matrix, annot=True) # annot = True to print the values inside the square
+
+# Plot scatter plot of target vs features
+plt.figure(figsize=(20, 5))
+
+features = ['LSTAT', 'RM']
+target = boston['MEDV']
+
+for i, col in enumerate(features):
+    plt.subplot(1, len(features) , i+1)
+    x = boston[col]
+    y = target
+    plt.scatter(x, y, marker='o')
+    plt.title(col)
+    plt.xlabel(col)
+    plt.ylabel('MEDV')
