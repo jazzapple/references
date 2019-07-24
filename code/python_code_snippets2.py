@@ -42,6 +42,46 @@ print("Let's not go to %s. 'Tis a silly %s." % (string_1, string_2))
 print("03 - %02d - 2019" % (day))
 # 03 - 06 - 2019	
 
+# list functions within a module
+	dir(module)
+	
+# help on a module's functions
+	help(module.function)
+	
+# OOP
+	# methods are run on objects
+	b = 'yay'
+	b.lower()
+	# where b is the object and lower is the method
+	
+# string value substitution
+	'hey %s i hve %d cats' %('sam',3)
+	#'hey sam i hve 3 cats'
+	
+# slice - upper bound is not included
+	a='hello'
+	a[1:3]
+	#'el'
+	
+	a[1:]
+	#'ello'
+	
+	a[:]
+	#'hello'
+	
+	a[:1]
+	#h
+	
+	a[:1]+a[1:]
+	#'hello'
+	
+	a[-3:]
+	#'llo'
+
+# Create tuples
+	#Combinig weather and temp into single listof tuples
+	features=zip(weather_encoded,temp_encoded)
+
 ############################
 # Dates
 ############################
@@ -176,6 +216,22 @@ my_file.closed # returns True or False
 # Check for any missing values
 df.isnull().sum()
 
+# Exclude a column by name using columns attribute
+df.loc[:, df.columns != 'PassengerID']
+
+############################
+# Feature engineering
+############################
+
+	# Catagorical encoding
+	# Import LabelEncoder
+		from sklearn import preprocessing
+		#creating labelEncoder
+		le = preprocessing.LabelEncoder()
+		# Converting string labels into numbers.
+		wheather_encoded=le.fit_transform(wheather)
+		print wheather_encoded
+
 ############################
 # Visualisations
 ############################
@@ -207,3 +263,37 @@ for i, col in enumerate(features):
     plt.title(col)
     plt.xlabel(col)
     plt.ylabel('MEDV')
+	
+# Pair plots coluoured by target
+sns.pairplot(processed, hue='Survived', vars=['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex_num', 'Embarked_num'])
+
+
+##############
+# Arrays
+##############
+
+# Load library
+import numpy as np
+
+# Create row vector
+vector = np.array([1, 2, 3, 4, 5, 6])
+
+# Create column vector
+vector_col = np.array([[1],
+                       [2],
+                       [3],
+                       [4],
+                       [5],
+                       [6]])
+
+# Create matrix
+matrix = np.array([[1, 2, 3],
+                   [4, 5, 6],
+                   [7, 8, 9]])
+
+# Select third element of vector
+vector[2]
+
+# Reshape allows us to restructure an array with same data but it is organized as a different number of rows and columns. 
+# -1 argument effectively means “as many as needed,” so reshape(-1, 1) means one row and as many columns as needed:
+matrix.reshape(1, -1)
