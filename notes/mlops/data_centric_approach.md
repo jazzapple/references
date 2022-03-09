@@ -1,6 +1,6 @@
 # Andrew Ng - MLOps: From a Model Centric to Data Centric approach
-* Presentation: https://www.youtube.com/watch?v=06-AZXmwHjo
-* Panel discussion: https://youtu.be/Yqj7Kyjznh4?t=750
+* Concept Presentation: https://www.youtube.com/watch?v=06-AZXmwHjo
+* Panel discussion (applications): https://youtu.be/Yqj7Kyjznh4?t=750
 
 ## MLOps
 * An emerging discipline that tries to make development and deployment of machine learning systematic

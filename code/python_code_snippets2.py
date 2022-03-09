@@ -1,3 +1,6 @@
+%load_ext autoreload
+%autoreload 2
+
 ############################
 # Packages
 ############################
@@ -78,9 +81,22 @@ print("03 - %02d - 2019" % (day))
 	a[-3:]
 	#'llo'
 
-# Create tuples
-	#Combinig weather and temp into single listof tuples
-	features=zip(weather_encoded,temp_encoded)
+############################
+# Tuples
+############################
+
+# Swapping values
+a = 'jelly'
+b = 'bean'
+a, b = b, a
+print(a, b)
+>>> 'bean', 'jelly'
+
+# Combinig weather and temp into single listof tuples
+features=zip(weather_encoded,temp_encoded)
+
+
+
 
 ############################
 # Dates
@@ -297,3 +313,16 @@ vector[2]
 # Reshape allows us to restructure an array with same data but it is organized as a different number of rows and columns. 
 # -1 argument effectively means “as many as needed,” so reshape(-1, 1) means one row and as many columns as needed:
 matrix.reshape(1, -1)
+
+# Concatenate columns for arrays
+# how does np.c_[] work? 
+a = np.array([[1, 2, 3], [4, 5, 6]])
+b = np.array([[7, 8, 9], [10, 11, 12]])
+print('a:', a)
+print('\nb:', b)
+print('\nnp.c_[a,b]:\n ',np.c_[a, b])
+
+##############
+# Anaconda
+##############
+* Cheat sheet: https://kapeli.com/cheat_sheets/Conda.docset/Contents/Resources/Documents/index
