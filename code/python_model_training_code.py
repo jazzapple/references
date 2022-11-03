@@ -10,9 +10,9 @@ from xgboost import XGBClassifier
 from sklearn.metrics import roc_auc_score, confusion_matrix
 from sklearn import datasets
 #%%
-"""
-Dummy classification data
-"""
+############################
+# Dummy clasification data
+############################
 
 def load_iris():
     # load iris dataset
@@ -30,9 +30,10 @@ def load_iris():
     iris_y = iris_df['class']
     return iris_X, iris_y
 
-"""
-EDA
-"""
+############################
+# EDA
+############################
+
 #%%
 def target_correlation(dataset, target_column):
     """
@@ -70,11 +71,10 @@ def target_correlation(dataset, target_column):
 
 #%%
 
+############################
+# Pre-processing
+############################
 
-
-"""
-Pre-processing
-"""
 # train test split with target stratification
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42, stratify=y)
 
@@ -89,6 +89,15 @@ std_scaler = StandardScaler() #default, minimises impact of outliers. MinMaxScal
 X_train_std = std_scaler.fit_transform(X_train)
 X_test_std = std_scaler.transform(X_test)
 
+# Catagorical encoding
+# Import LabelEncoder
+from sklearn import preprocessing
+#creating labelEncoder
+le = preprocessing.LabelEncoder()
+# Converting string labels into numbers.
+wheather_encoded=le.fit_transform(wheather)
+print (wheather_encoded)
 
+# Tfidf
 
 

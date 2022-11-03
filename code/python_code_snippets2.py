@@ -1,5 +1,24 @@
+
+############################
+# Setup
+############################
+#%%
+# Extension reloads
 %load_ext autoreload
 %autoreload 2
+
+# Display options
+pd.options.display.max_columns = None
+pd.options.display.max_rows = None
+pd.options.display.max_colwidth = None
+pd.set_option('display.html.use_mathjax', False)
+
+# Suppress scientific notation
+pd.options.display.float_format = '{:.2f}'.format
+np.set_printoptions(suppress=True)
+
+#%%
+
 
 ############################
 # Packages
@@ -94,8 +113,6 @@ print(a, b)
 
 # Combinig weather and temp into single listof tuples
 features=zip(weather_encoded,temp_encoded)
-
-
 
 
 ############################
@@ -234,19 +251,6 @@ df.isnull().sum()
 
 # Exclude a column by name using columns attribute
 df.loc[:, df.columns != 'PassengerID']
-
-############################
-# Feature engineering
-############################
-
-	# Catagorical encoding
-	# Import LabelEncoder
-		from sklearn import preprocessing
-		#creating labelEncoder
-		le = preprocessing.LabelEncoder()
-		# Converting string labels into numbers.
-		wheather_encoded=le.fit_transform(wheather)
-		print wheather_encoded
 
 ############################
 # Visualisations
