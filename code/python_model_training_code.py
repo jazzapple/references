@@ -68,7 +68,86 @@ def target_correlation(dataset, target_column):
 
     return target_cor.sort_values('target_correlation', ascending=False)
 
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 
+def calculate_vif(dataset: pd.DataFrame, med_threshold=1, high_threshold=5.0) -> pd.DataFrame:
+    """
+    Calculate Variance Inflation Factor for numeric features to 
+    detect multicollinearity between features.
+
+    VIF: https://www.statisticshowto.com/variance-inflation-factor/ 
+    VIF ranges from 1 upwards. Shows what percentage the variance is 
+    inflated for each coefficient. E.g. VIF of 1.9 tells you that the 
+    variance of a particular coefficient is 90% bigger than what you 
+    would expect if there was no multicollinearity (no correlation 
+    with other predictors). A rule of thumb:
+
+    1 = not correlated.
+    Between 1 and 5 = moderately correlated. 
+    Greater than 5 highly correlated.
+
+    Args:
+        dataset: data frame containing features
+    """
+
+    data = dataset.copy()
+    data = data.fillna(0)
+
+    # Calculate VIF on numeric values
+    X = data.select_dtypes(include=["float64", 'int64'])  
+    vif = pd.DataFrame()
+    vif['features'] = X.columns
+    vif['VIF'] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
+    vif['VIF_status'] = vif['VIF'].map(lambda x: 'high' if x > high_threshold else \
+                                        ('medium' if x > med_threshold else 'none'))
+
+    print(f"calculated VIF for {range(X.shape[1])} features")
+
+    return vif.round(1)
+
+
+from pyod.models.knn import KNN
+from pyod.models.iforest import IForest
+from pyod.models.pca import PCA as PCA_od
+
+def detect_outliers(dataset, contamination=0.20, methods=['knn', 'iso','pca']): 
+    """
+    Args:
+        contamination: proportion of dataset expected as outliers
+    """
+    # only do this on the numeric columns
+    data = dataset.select_dtypes(include=["float64", "int64"]).copy()
+
+    if 'knn' in methods:
+        knn = KNN(contamination=contamination) 
+        knn.fit(data)
+        knn_predict = knn.predict(data)# binary labels (0: inliers, 1: outliers)
+        data['knn'] = knn_predict
+
+    if 'iso' in methods:
+        iso = IForest(contamination=contamination, random_state=42, behaviour='new')
+        iso_predict = iso.predict(data)
+        iso.fit(data)
+        data['iso'] = iso_predict
+
+    if 'pca' in methods:
+        pca = PCA_od(contamination=contamination, random_state=42)
+        pca.fit(data)
+        pca_predict = pca.predict(data)
+        data['pca'] = pca_predict
+
+    data['vote_outlier'] = 0
+
+    for i in methods:
+        data['vote_outlier'] = data['vote_outlier'] + data[i]
+
+    # only select if all methods agree on outliers 
+    outliers = data[data['vote_outlier'] == len(methods)]
+    print('Outlier size {0}'.format(len(outliers)))
+
+    print(dataset[[True if i in outliers.index else False for i in dataset.index]])
+
+    return data
 #%%
 
 ############################

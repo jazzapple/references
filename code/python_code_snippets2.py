@@ -119,7 +119,8 @@ features=zip(weather_encoded,temp_encoded)
 # Dates
 ############################
 
-from datetime import datetime
+from datetime import datetime, timedelta
+import pandas as pd
 
 # current datetime
 now = datetime.now()
@@ -133,6 +134,17 @@ now.second
 
 # date formatting dd-mm-yyyy
 print('%02d-%02d-%04d' % (now.day, now.month, now.year))
+
+# get start of week (starts Monday)
+df ['review_week'] = df ['review_date'].apply(lambda x: x - timedelta(days=x.weekday())).astype(str)
+
+# create date range between earliest and latest date 
+df_all_dates = pd.DataFrame(
+    pd.date_range(start=min(df ["review_date"]), 
+                  end=max(df ["review_date"]), 
+                  freq='W').astype(str), 
+    columns=['review_week']
+    )
 
 ############################
 # Command line execution
@@ -260,29 +272,29 @@ import matplotlib.pyplot as plt
 import seaborn as sns 
 %matplotlib inline
 
-# Histogram percentile
+# Histogram percentile (continuous variable)
 sns.set(rc={'figure.figsize':(11.7,8.27)})
 sns.distplot(df['MEDV'], bins=30)
 plt.show()
 
-# Plot correlations between features
-correlation_matrix = df.corr().round(2)
+# Plot correlations between features (numeric)
+correlation_matrix = df.select_dtypes(include=['float64', 'int64', 'int32']).corr().round(2)
 sns.heatmap(data=correlation_matrix, annot=True) # annot = True to print the values inside the square
 
 # Plot scatter plot of target vs features
 plt.figure(figsize=(20, 5))
 
-features = ['LSTAT', 'RM']
-target = boston['MEDV']
+features = X.columns
+target = df['class']
 
 for i, col in enumerate(features):
     plt.subplot(1, len(features) , i+1)
-    x = boston[col]
+    x = df[col]
     y = target
     plt.scatter(x, y, marker='o')
     plt.title(col)
     plt.xlabel(col)
-    plt.ylabel('MEDV')
+    plt.ylabel(target.name)
 	
 # Pair plots coluoured by target
 sns.pairplot(processed, hue='Survived', vars=['Pclass', 'Age', 'SibSp', 'Parch', 'Fare', 'Sex_num', 'Embarked_num'])
