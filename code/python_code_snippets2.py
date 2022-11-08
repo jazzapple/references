@@ -116,6 +116,17 @@ features=zip(weather_encoded,temp_encoded)
 
 
 ############################
+# Lists
+############################
+
+# list comprehension if else
+[f(x) if condition else g(x) for x in sequence]
+[f(x) for x in sequence if condition]
+
+# flatten a list of lists
+flattened_list = [y for x in list_of_lists for y in x]
+
+############################
 # Dates
 ############################
 
