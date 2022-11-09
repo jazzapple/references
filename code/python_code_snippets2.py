@@ -431,6 +431,11 @@ cities = np.array(["Hong Kong", "New York", "Berlin",
 polluted = set(cities[np.nonzero(X > np.average(X))[0]])
 print(polluted)
 
+
+# if then else / where
+np.where(df['col'].str.contains('abc'), 1,
+         np.where(df['col2'].str.contains('def'), 1, 0))
+
 ##############
 # Anaconda
 ##############
