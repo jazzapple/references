@@ -45,6 +45,7 @@
 * Spark goal: maximise CPU usage. If Java process is spending lots of time garbage collecting, % CPU usage will be low.
 * With 64 cores, theoretically expect 64,000 
 * With Pyspark local, running 1 executor with N cores. So memory is collective
+* Optimal partition:core ratio is 1.5-2 for computational efficiency, assuming sufficient memory without having to do garbage collection too often
 
 ## Spark Compute troubleshooting
 1. check Top for memory usage - is it excessive?
