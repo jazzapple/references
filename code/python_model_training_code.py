@@ -177,6 +177,27 @@ le = preprocessing.LabelEncoder()
 wheather_encoded=le.fit_transform(wheather)
 print (wheather_encoded)
 
+# Random Forest. 
+# Good place to start is Random Forest as this does not require much hyperparameter tuning besides number of trees, 
+# and because the ensemble model is quite robust to noise from the individual trees
+# Suggest setting max_depth, min_samples_leaf to non-null to constrain depth of trees
+
+rf = RandomForestClassifier(criterion='entropy', # info gain objective
+                            n_estimators=100, 
+                            random_state=0,
+                            n_jobs=-1) # use all cores for parallel processing
+
+rf.fit(X_train, y_train)
+rf_pred = rf.predict_proba(X_test)[:, 1]
+
+# Logistic Regression
+# Uses L2 regularisation by default
+logit = LogisticRegression(C=1, max_iter=200) # C = 1/lambda. Smaller values specify stronger regularisation.
+logit.fit(X_train, y_train)
+logit_test_pred = logit.predict_proba(X_test)[:, 1]
+
+# TODO
 # Tfidf
+
 
 
